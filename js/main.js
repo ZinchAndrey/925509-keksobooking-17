@@ -9,6 +9,7 @@ var Y_TO = 630;
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 40;
 
+var mapPinsBlock = document.querySelector('.map__pins');
 
 var map = document.querySelector('.map--faded');
 map.classList.remove('map--faded');
@@ -59,6 +60,6 @@ for (var i = 0; i < OBJECTS_COUNT; i++) {
   element.setAttribute('style', 'left: ' + (generateData(OBJECTS_COUNT)[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (generateData(OBJECTS_COUNT)[i].location.y - PIN_HEIGHT) + 'px;');
   element.children[0].setAttribute('src', generateData(OBJECTS_COUNT)[i].author.avatar);
   // element.children[0].setAttribute('alt', 'Объявление № ' + i + 1);
-  document.body.appendChild(element);
+  mapPinsBlock.appendChild(element);
   // console.log(element);
 }
