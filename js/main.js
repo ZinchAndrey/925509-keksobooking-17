@@ -46,7 +46,7 @@ function generateObject(avatarNumber) {
 function generateData(objectsCount) {
   var data = [];
 
-  for (var i = 0; i < OBJECTS_COUNT; i++) {
+  for (var i = 0; i < objectsCount; i++) {
     data[i] = generateObject(i + 1);
     // Math.floor(Math.random()*(i + 1));
     // data.push(generateObject(i + 1));
