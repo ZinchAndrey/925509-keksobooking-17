@@ -6,11 +6,14 @@ var OBJECTS_COUNT = 8;
 var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var Y_FROM = 130;
 var Y_TO = 630;
+var PIN_WIDTH = 40;
+var PIN_HEIGHT = 40;
 
 
 var map = document.querySelector('.map--faded');
-// console.log(map.classList);
 map.classList.remove('map--faded');
+
+var templatePin = document.querySelector('#pin').content.querySelector('button');
 
 function getBlockWidth(blockClass) {
   return document.querySelector(blockClass).offsetWidth;
@@ -48,4 +51,14 @@ function generateData(objectsCount) {
     // data.push(generateObject(i + 1));
   }
   return data;
+}
+
+for (var i = 0; i < OBJECTS_COUNT; i++) {
+  var element = templatePin.cloneNode(true);
+  element.setAttribute('alt', 'Объявление № ' + (i + 1));
+  element.setAttribute('style', 'left: ' + (generateData(OBJECTS_COUNT)[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (generateData(OBJECTS_COUNT)[i].location.y - PIN_HEIGHT) + 'px;');
+  element.children[0].setAttribute('src', generateData(OBJECTS_COUNT)[i].author.avatar);
+  // element.children[0].setAttribute('alt', 'Объявление № ' + i + 1);
+  document.body.appendChild(element);
+  // console.log(element);
 }
