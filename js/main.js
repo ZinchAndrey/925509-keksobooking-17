@@ -48,18 +48,19 @@ function generateData(objectsCount) {
 
   for (var i = 0; i < objectsCount; i++) {
     data[i] = generateObject(i + 1);
-    // Math.floor(Math.random()*(i + 1));
-    // data.push(generateObject(i + 1));
   }
   return data;
 }
 
-for (var i = 0; i < OBJECTS_COUNT; i++) {
-  var element = templatePin.cloneNode(true);
-  element.setAttribute('alt', 'Объявление № ' + (i + 1));
-  element.setAttribute('style', 'left: ' + (generateData(OBJECTS_COUNT)[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (generateData(OBJECTS_COUNT)[i].location.y - PIN_HEIGHT) + 'px;');
-  element.children[0].setAttribute('src', generateData(OBJECTS_COUNT)[i].author.avatar);
-  // element.children[0].setAttribute('alt', 'Объявление № ' + i + 1);
-  mapPinsBlock.appendChild(element);
-  // console.log(element);
+function generateHotels(objectsCount) {
+  for (var i = 0; i < objectsCount; i++) {
+    var element = templatePin.cloneNode(true);
+    element.setAttribute('alt', 'Объявление № ' + (i + 1));
+    element.setAttribute('style', 'left: ' + (generateData(objectsCount)[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (generateData(objectsCount)[i].location.y - PIN_HEIGHT) + 'px;');
+    element.children[0].setAttribute('src', generateData(objectsCount)[i].author.avatar);
+    mapPinsBlock.appendChild(element);
+  }
+  return element;
 }
+
+generateHotels(OBJECTS_COUNT);
