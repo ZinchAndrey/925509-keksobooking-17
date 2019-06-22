@@ -24,6 +24,8 @@ var mapPinMain = document.querySelector('.map__pin--main');
 
 var address = document.getElementById('address');
 
+var isMapActive = false;
+
 function setDisableFieldset() {
   for (var i = 0; i < fieldset.length; i++) {
     fieldset[i].setAttribute('disabled', '');
@@ -86,9 +88,12 @@ function generateHotels(objectsCount) {
 setDisableFieldset();
 
 mapPinMain.addEventListener('click', function () {
-  map.classList.remove('map--faded');
-  generateHotels(OBJECTS_COUNT);
-  removeDisableAttribute();
+  if (!isMapActive) {
+    map.classList.remove('map--faded');
+    generateHotels(OBJECTS_COUNT);
+    removeDisableAttribute();
+    isMapActive = true;
+  }
 });
 
 // generateHotels(OBJECTS_COUNT);
@@ -99,4 +104,5 @@ function getPinXY() {
 
 mapPinMain.addEventListener('mouseup', function () {
   address.value = getPinXY();
+  address.setAttribute('disabled', '');
 });
