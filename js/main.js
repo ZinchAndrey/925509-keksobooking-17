@@ -19,7 +19,6 @@ var map = document.querySelector('.map--faded');
 var templatePin = document.querySelector('#pin').content.querySelector('button');
 
 var fieldset = document.querySelectorAll('fieldset');
-// console.log(fieldset);
 
 var mapPinMain = document.querySelector('.map__pin--main');
 
