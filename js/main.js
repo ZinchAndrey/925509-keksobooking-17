@@ -8,13 +8,35 @@ var Y_FROM = 130;
 var Y_TO = 630;
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 40;
+// var MAIN_PIN_WIDTH = 65;
+// var MAIN_PIN_HEIGHT = 65;
+
 
 var mapPinsBlock = document.querySelector('.map__pins');
 
 var map = document.querySelector('.map--faded');
-map.classList.remove('map--faded');
 
 var templatePin = document.querySelector('#pin').content.querySelector('button');
+
+var fieldset = document.querySelectorAll('fieldset');
+
+var mapPinMain = document.querySelector('.map__pin--main');
+
+var address = document.getElementById('address');
+
+var isMapActive = false;
+
+function setDisableFieldset() {
+  for (var i = 0; i < fieldset.length; i++) {
+    fieldset[i].setAttribute('disabled', '');
+  }
+}
+
+function removeDisableAttribute() {
+  for (var i = 0; i < fieldset.length; i++) {
+    fieldset[i].removeAttribute('disabled', '');
+  }
+}
 
 function getBlockWidth(blockClass) {
   return document.querySelector(blockClass).offsetWidth;
@@ -63,4 +85,24 @@ function generateHotels(objectsCount) {
   return element;
 }
 
-generateHotels(OBJECTS_COUNT);
+setDisableFieldset();
+
+mapPinMain.addEventListener('click', function () {
+  if (!isMapActive) {
+    map.classList.remove('map--faded');
+    generateHotels(OBJECTS_COUNT);
+    removeDisableAttribute();
+    isMapActive = true;
+  }
+});
+
+// generateHotels(OBJECTS_COUNT);
+
+function getPinXY() {
+  return mapPinMain.getAttribute('style').match(/\d+/g);
+}
+
+mapPinMain.addEventListener('mouseup', function () {
+  address.value = getPinXY();
+  address.setAttribute('disabled', '');
+});
