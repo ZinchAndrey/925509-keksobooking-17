@@ -106,3 +106,30 @@ mapPinMain.addEventListener('mouseup', function () {
   address.value = getPinXY();
   address.setAttribute('disabled', '');
 });
+
+var hotelType = document.getElementById('type');
+var selectedItem = hotelType.querySelectorAll('.option');
+var minPrice = document.getElementById('price');
+var submitButton = document.querySelector('.ad-form__submit');
+
+submitButton.addEventListener('click', function () {
+  for (var i = 0; i < selectedItem.length; i++) {
+    if (selectedItem[i].selected) {
+      if (selectedItem[i].value === 'house') {
+        console.log('установи минимальную цену 5000 руб');
+        minPrice.setAttribute('placeholder', '5000');
+        minPrice.setAttribute('min', '5000');
+      } else if (selectedItem[i].value === 'flat') {
+        console.log('установи минимальную цену 1000 руб');
+        minPrice.setAttribute('placeholder', '1000');
+        minPrice.setAttribute('min', '1000');
+      } else if (selectedItem[i].value === 'bungalo') {
+        console.log('установи минимальную цену 0 руб');
+        minPrice.setAttribute('min', '0');
+      } else if (selectedItem[i].value === 'palace') {
+        console.log('установи минимальную цену 10000 руб');
+        minPrice.setAttribute('min', '10000');
+      }
+    }
+  }
+});
