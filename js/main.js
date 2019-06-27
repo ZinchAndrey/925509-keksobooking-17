@@ -26,6 +26,8 @@ var address = document.getElementById('address');
 
 var isMapActive = false;
 
+var mainForm = document.querySelector('.ad-form');
+
 function setDisableFieldset() {
   for (var i = 0; i < fieldset.length; i++) {
     fieldset[i].setAttribute('disabled', '');
@@ -90,6 +92,7 @@ setDisableFieldset();
 mapPinMain.addEventListener('click', function () {
   if (!isMapActive) {
     map.classList.remove('map--faded');
+    mainForm.classList.remove('ad-form--disabled');
     generateHotels(OBJECTS_COUNT);
     removeDisableAttribute();
     isMapActive = true;
@@ -108,28 +111,51 @@ mapPinMain.addEventListener('mouseup', function () {
 });
 
 var hotelType = document.getElementById('type');
-var selectedItem = hotelType.querySelectorAll('.option');
+var selectedItem = hotelType.querySelectorAll('option');
 var minPrice = document.getElementById('price');
-var submitButton = document.querySelector('.ad-form__submit');
+// var submitButton = document.querySelector('.ad-form__submit');
 
-submitButton.addEventListener('click', function () {
+hotelType.addEventListener('input', function () {
   for (var i = 0; i < selectedItem.length; i++) {
     if (selectedItem[i].selected) {
       if (selectedItem[i].value === 'house') {
-        console.log('установи минимальную цену 5000 руб');
+        // console.log('установи минимальную цену 5000 руб');
         minPrice.setAttribute('placeholder', '5000');
         minPrice.setAttribute('min', '5000');
       } else if (selectedItem[i].value === 'flat') {
-        console.log('установи минимальную цену 1000 руб');
+        // console.log('установи минимальную цену 1000 руб');
         minPrice.setAttribute('placeholder', '1000');
         minPrice.setAttribute('min', '1000');
       } else if (selectedItem[i].value === 'bungalo') {
-        console.log('установи минимальную цену 0 руб');
+        // console.log('установи минимальную цену 0 руб');
+        minPrice.setAttribute('placeholder', '0');
         minPrice.setAttribute('min', '0');
       } else if (selectedItem[i].value === 'palace') {
-        console.log('установи минимальную цену 10000 руб');
+        // console.log('установи минимальную цену 10000 руб');
+        minPrice.setAttribute('placeholder', '10000');
         minPrice.setAttribute('min', '10000');
       }
     }
   }
 });
+
+var timeIn = document.getElementById('timein');
+var timeOut = document.getElementById('timeout');
+var selectedTimeIn = timeIn.querySelectorAll('option');
+var selectedTimeOut = timeOut.querySelectorAll('option');
+
+timeIn.addEventListener('change', function () {
+  for (var i = 0; i < selectedTimeIn.length; i++) {
+    if (selectedTimeIn[i].selected) {
+      for (var j = 0; j < selectedTimeIn.length; j++) {
+        if (j !== i) {
+          selectedTimeOut[j].removeAttribute('selected');
+        }
+      }
+      selectedTimeOut[i].setAttribute('selected', '');
+    }
+  }
+});
+
+// console.log(timein);
+// console.log(selectedTimeOut);
