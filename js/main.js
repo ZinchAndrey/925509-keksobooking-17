@@ -8,6 +8,10 @@ var Y_FROM = 130;
 var Y_TO = 630;
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 40;
+var MIN_PRICE_BUNGALO = 0;
+var MIN_PRICE_FLAT = 1000;
+var MIN_PRICE_HOUSE = 5000;
+var MIN_PRICE_PALACE = 10000;
 // var MAIN_PIN_WIDTH = 65;
 // var MAIN_PIN_HEIGHT = 65;
 
@@ -99,8 +103,6 @@ mapPinMain.addEventListener('click', function () {
   }
 });
 
-// generateHotels(OBJECTS_COUNT);
-
 function getPinXY() {
   return mapPinMain.getAttribute('style').match(/\d+/g);
 }
@@ -113,27 +115,23 @@ mapPinMain.addEventListener('mouseup', function () {
 var hotelType = document.getElementById('type');
 var selectedItem = hotelType.querySelectorAll('option');
 var minPrice = document.getElementById('price');
-// var submitButton = document.querySelector('.ad-form__submit');
+
+function setMinPriceAttributes(minimalPrice) {
+  minPrice.setAttribute('placeholder', minimalPrice);
+  minPrice.setAttribute('min', minimalPrice);
+}
 
 hotelType.addEventListener('input', function () {
   for (var i = 0; i < selectedItem.length; i++) {
     if (selectedItem[i].selected) {
       if (selectedItem[i].value === 'house') {
-        // console.log('установи минимальную цену 5000 руб');
-        minPrice.setAttribute('placeholder', '5000');
-        minPrice.setAttribute('min', '5000');
+        setMinPriceAttributes(MIN_PRICE_HOUSE);
       } else if (selectedItem[i].value === 'flat') {
-        // console.log('установи минимальную цену 1000 руб');
-        minPrice.setAttribute('placeholder', '1000');
-        minPrice.setAttribute('min', '1000');
+        setMinPriceAttributes(MIN_PRICE_FLAT);
       } else if (selectedItem[i].value === 'bungalo') {
-        // console.log('установи минимальную цену 0 руб');
-        minPrice.setAttribute('placeholder', '0');
-        minPrice.setAttribute('min', '0');
+        setMinPriceAttributes(MIN_PRICE_BUNGALO);
       } else if (selectedItem[i].value === 'palace') {
-        // console.log('установи минимальную цену 10000 руб');
-        minPrice.setAttribute('placeholder', '10000');
-        minPrice.setAttribute('min', '10000');
+        setMinPriceAttributes(MIN_PRICE_PALACE);
       }
     }
   }
@@ -141,21 +139,12 @@ hotelType.addEventListener('input', function () {
 
 var timeIn = document.getElementById('timein');
 var timeOut = document.getElementById('timeout');
-var selectedTimeIn = timeIn.querySelectorAll('option');
-var selectedTimeOut = timeOut.querySelectorAll('option');
 
-timeIn.addEventListener('change', function () {
-  for (var i = 0; i < selectedTimeIn.length; i++) {
-    if (selectedTimeIn[i].selected) {
-      for (var j = 0; j < selectedTimeIn.length; j++) {
-        if (j !== i) {
-          selectedTimeOut[j].removeAttribute('selected');
-        }
-      }
-      selectedTimeOut[i].setAttribute('selected', '');
-    }
-  }
-});
+function syncTime(firstTime, secondTime) {
+  firstTime.addEventListener('change', function () {
+    secondTime.value = firstTime.value;
+  });
+}
 
-// console.log(timein);
-// console.log(selectedTimeOut);
+syncTime(timeIn, timeOut);
+syncTime(timeOut, timeIn);
