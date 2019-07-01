@@ -8,6 +8,10 @@ var Y_FROM = 130;
 var Y_TO = 630;
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 40;
+var MIN_PRICE_BUNGALO = 0;
+var MIN_PRICE_FLAT = 1000;
+var MIN_PRICE_HOUSE = 5000;
+var MIN_PRICE_PALACE = 10000;
 // var MAIN_PIN_WIDTH = 65;
 // var MAIN_PIN_HEIGHT = 65;
 
@@ -25,6 +29,8 @@ var mapPinMain = document.querySelector('.map__pin--main');
 var address = document.getElementById('address');
 
 var isMapActive = false;
+
+var mainForm = document.querySelector('.ad-form');
 
 function setDisableFieldset() {
   for (var i = 0; i < fieldset.length; i++) {
@@ -90,13 +96,12 @@ setDisableFieldset();
 mapPinMain.addEventListener('click', function () {
   if (!isMapActive) {
     map.classList.remove('map--faded');
+    mainForm.classList.remove('ad-form--disabled');
     generateHotels(OBJECTS_COUNT);
     removeDisableAttribute();
     isMapActive = true;
   }
 });
-
-// generateHotels(OBJECTS_COUNT);
 
 function getPinXY() {
   return mapPinMain.getAttribute('style').match(/\d+/g);
@@ -106,3 +111,40 @@ mapPinMain.addEventListener('mouseup', function () {
   address.value = getPinXY();
   address.setAttribute('disabled', '');
 });
+
+var hotelType = document.getElementById('type');
+var selectedItem = hotelType.querySelectorAll('option');
+var minPrice = document.getElementById('price');
+
+function setMinPriceAttributes(minimalPrice) {
+  minPrice.setAttribute('placeholder', minimalPrice);
+  minPrice.setAttribute('min', minimalPrice);
+}
+
+hotelType.addEventListener('input', function () {
+  for (var i = 0; i < selectedItem.length; i++) {
+    if (selectedItem[i].selected) {
+      if (selectedItem[i].value === 'house') {
+        setMinPriceAttributes(MIN_PRICE_HOUSE);
+      } else if (selectedItem[i].value === 'flat') {
+        setMinPriceAttributes(MIN_PRICE_FLAT);
+      } else if (selectedItem[i].value === 'bungalo') {
+        setMinPriceAttributes(MIN_PRICE_BUNGALO);
+      } else if (selectedItem[i].value === 'palace') {
+        setMinPriceAttributes(MIN_PRICE_PALACE);
+      }
+    }
+  }
+});
+
+var timeIn = document.getElementById('timein');
+var timeOut = document.getElementById('timeout');
+
+function syncTime(firstTime, secondTime) {
+  firstTime.addEventListener('change', function () {
+    secondTime.value = firstTime.value;
+  });
+}
+
+syncTime(timeIn, timeOut);
+syncTime(timeOut, timeIn);
