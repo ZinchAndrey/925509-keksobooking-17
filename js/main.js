@@ -12,8 +12,8 @@ var MIN_PRICE_BUNGALO = 0;
 var MIN_PRICE_FLAT = 1000;
 var MIN_PRICE_HOUSE = 5000;
 var MIN_PRICE_PALACE = 10000;
-// var MAIN_PIN_WIDTH = 65;
-// var MAIN_PIN_HEIGHT = 65;
+var MAIN_PIN_WIDTH = 62;
+var MAIN_PIN_HEIGHT = 84;
 
 
 var mapPinsBlock = document.querySelector('.map__pins');
@@ -93,15 +93,16 @@ function generateHotels(objectsCount) {
 
 setDisableFieldset();
 
-mapPinMain.addEventListener('click', function () {
-  if (!isMapActive) {
-    map.classList.remove('map--faded');
-    mainForm.classList.remove('ad-form--disabled');
-    generateHotels(OBJECTS_COUNT);
-    removeDisableAttribute();
-    isMapActive = true;
-  }
-});
+// mapPinMain.addEventListener('click', function () {
+//   if (!isMapActive) {
+//     map.classList.remove('map--faded');
+//     mainForm.classList.remove('ad-form--disabled');
+//     generateHotels(OBJECTS_COUNT);
+//     removeDisableAttribute();
+//     isMapActive = true;
+//   }
+// });
+
 // //////////////////////////////
 
 mapPinMain.addEventListener('mousedown', function (evt) {
@@ -132,6 +133,14 @@ mapPinMain.addEventListener('mousedown', function (evt) {
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
 
+    if (!isMapActive) {
+      map.classList.remove('map--faded');
+      mainForm.classList.remove('ad-form--disabled');
+      generateHotels(OBJECTS_COUNT);
+      removeDisableAttribute();
+      isMapActive = true;
+    }
+
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
   };
@@ -146,8 +155,11 @@ function getPinXY() {
   return mapPinMain.getAttribute('style').match(/\d+/g);
 }
 
-mapPinMain.addEventListener('mouseup', function () {
-  address.value = getPinXY();
+// console.log(getPinXY()[0] - MAIN_PIN_WIDTH / 2);
+// console.log(getPinXY()[1] + MAIN_PIN_HEIGHT);
+
+mapPinMain.addEventListener('mousemove', function () {
+  address.value = +getPinXY()[0] - MAIN_PIN_WIDTH / 2 + ', ' + (+getPinXY()[1] + MAIN_PIN_HEIGHT);
   address.setAttribute('disabled', '');
 });
 
