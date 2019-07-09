@@ -28,10 +28,12 @@ var HOUSE_SETTINGS = {
 };
 var Y_FROM = 130;
 var Y_TO = 630;
-var PIN_WIDTH = 40;
-var PIN_HEIGHT = 40;
-var MAIN_PIN_WIDTH = 62;
-var MAIN_PIN_HEIGHT = 80;
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 85;
+var TOP_BORDER = 130;
+var BOTTOM_BORDER = 630;
 
 var mapPinsBlock = document.querySelector('.map__pins');
 var map = document.querySelector('.map--faded');
@@ -74,12 +76,20 @@ mapPinMain.addEventListener('mousedown', function (evt) {
     mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
     mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 
-    if (pinCoordinates[0] + MAIN_PIN_WIDTH / 2 < 0) {
-      mapPinMain.style.left = -MAIN_PIN_WIDTH / 2 + 'px';
+    if (pinCoordinates.x < 0) {
+      mapPinMain.style.left = 0 + 'px';
     }
 
-    if (pinCoordinates[1] + MAIN_PIN_HEIGHT < 0) {
-      mapPinMain.style.top = -MAIN_PIN_HEIGHT + 'px';
+    if (pinCoordinates.x > mapPinsBlock.offsetWidth - MAIN_PIN_WIDTH) {
+      mapPinMain.style.left = mapPinsBlock.offsetWidth - MAIN_PIN_WIDTH + 'px';
+    }
+
+    if (pinCoordinates.y < TOP_BORDER) {
+      mapPinMain.style.top = TOP_BORDER + 'px';
+    }
+
+    if (pinCoordinates.y > (BOTTOM_BORDER)) {
+      mapPinMain.style.top = (BOTTOM_BORDER) + 'px';
     }
   };
 
@@ -101,9 +111,10 @@ mapPinMain.addEventListener('mousedown', function (evt) {
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
+
 mapPinMain.addEventListener('mousemove', function () {
   var pinCoordinates = getPinXY();
-  address.value = pinCoordinates[0] + MAIN_PIN_WIDTH / 2 + ', ' + (pinCoordinates[1] + MAIN_PIN_HEIGHT);
+  address.value = pinCoordinates.x + MAIN_PIN_WIDTH / 2 + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
 
   address.setAttribute('disabled', '');
 });
@@ -189,7 +200,11 @@ function generateHotels(objectsCount) {
 }
 
 function getPinXY() {
-  return [mapPinMain.offsetLeft, mapPinMain.offsetTop];
+  return {
+    x: mapPinMain.offsetLeft,
+    y: mapPinMain.offsetTop
+  };
+  // [mapPinMain.offsetLeft, mapPinMain.offsetTop];
 }
 
 function syncTime(firstTime, secondTime) {
