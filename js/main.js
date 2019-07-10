@@ -32,8 +32,6 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var MAIN_PIN_WIDTH = 65;
 var MAIN_PIN_HEIGHT = 85;
-var TOP_BORDER = 130;
-var BOTTOM_BORDER = 630;
 
 var mapPinsBlock = document.querySelector('.map__pins');
 var map = document.querySelector('.map--faded');
@@ -84,12 +82,12 @@ mapPinMain.addEventListener('mousedown', function (evt) {
       mapPinMain.style.left = mapPinsBlock.offsetWidth - MAIN_PIN_WIDTH + 'px';
     }
 
-    if (pinCoordinates.y < TOP_BORDER) {
-      mapPinMain.style.top = TOP_BORDER + 'px';
+    if (pinCoordinates.y < Y_FROM) {
+      mapPinMain.style.top = Y_FROM + 'px';
     }
 
-    if (pinCoordinates.y > (BOTTOM_BORDER)) {
-      mapPinMain.style.top = (BOTTOM_BORDER) + 'px';
+    if (pinCoordinates.y > (Y_TO)) {
+      mapPinMain.style.top = (Y_TO) + 'px';
     }
   };
 

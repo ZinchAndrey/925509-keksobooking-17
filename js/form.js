@@ -4,50 +4,58 @@ var MIN_PRICE_BUNGALO = 0;
 var MIN_PRICE_FLAT = 1000;
 var MIN_PRICE_HOUSE = 5000;
 var MIN_PRICE_PALACE = 10000;
-
-var fieldset = document.querySelectorAll('fieldset');
-var mainForm = document.querySelector('.ad-form');
-var hotelType = document.getElementById('type');
-var selectedItem = hotelType.querySelectorAll('option');
-var minPrice = document.getElementById('price');
-
-
-function setDisableFieldset() {
-  for (var i = 0; i < fieldset.length; i++) {
-    fieldset[i].setAttribute('disabled', '');
+var HOUSE_SETTINGS = {
+  'palace': {
+    placeholder: MIN_PRICE_PALACE,
+    min: MIN_PRICE_PALACE
+  },
+  'flat': {
+    placeholder: MIN_PRICE_FLAT,
+    min: MIN_PRICE_FLAT
+  },
+  'house': {
+    placeholder: MIN_PRICE_HOUSE,
+    min: MIN_PRICE_HOUSE
+  },
+  'bungalo': {
+    placeholder: MIN_PRICE_BUNGALO,
+    min: MIN_PRICE_BUNGALO
   }
-}
+};
 
-function removeDisableAttribute() {
-  for (var i = 0; i < fieldset.length; i++) {
-    fieldset[i].removeAttribute('disabled', '');
-  }
-}
+// var mainForm = document.querySelector('.ad-form');
+// var address = document.querySelector('#address');
+var hotelType = document.querySelector('#type');
+var minPrice = document.querySelector('#price');
+var timeIn = document.querySelector('#timein');
+var timeOut = document.querySelector('#timeout');
 
+var fieldSets = document.querySelectorAll('fieldset');
 
-function setMinPriceAttributes(minimalPrice) {
-  minPrice.setAttribute('placeholder', minimalPrice);
-  minPrice.setAttribute('min', minimalPrice);
-}
+setDisableFieldset();
 
-hotelType.addEventListener('input', function () {
-  for (var i = 0; i < selectedItem.length; i++) {
-    if (selectedItem[i].selected) {
-      if (selectedItem[i].value === 'house') {
-        setMinPriceAttributes(MIN_PRICE_HOUSE);
-      } else if (selectedItem[i].value === 'flat') {
-        setMinPriceAttributes(MIN_PRICE_FLAT);
-      } else if (selectedItem[i].value === 'bungalo') {
-        setMinPriceAttributes(MIN_PRICE_BUNGALO);
-      } else if (selectedItem[i].value === 'palace') {
-        setMinPriceAttributes(MIN_PRICE_PALACE);
-      }
-    }
+syncTime(timeIn, timeOut);
+syncTime(timeOut, timeIn);
+
+hotelType.addEventListener('change', function () {
+  var selectedValue = hotelType.value;
+  var selectedSettings = HOUSE_SETTINGS[selectedValue];
+  // placeholder: MIN_PRICE_FLAT,
+  // min: MIN_PRICE_FLAT
+  var attributes = Object.keys(selectedSettings); // ['placeholder', 'min']
+
+  for (var i = 0; i < attributes.length; i++) {
+    var attribute = attributes[i];
+    var value = selectedSettings[attribute];
+    minPrice.setAttribute(attribute, value);
   }
 });
 
-var timeIn = document.getElementById('timein');
-var timeOut = document.getElementById('timeout');
+function setDisableFieldset() {
+  for (var i = 0; i < fieldSets.length; i++) {
+    fieldSets[i].setAttribute('disabled', '');
+  }
+}
 
 function syncTime(firstTime, secondTime) {
   firstTime.addEventListener('change', function () {
@@ -55,7 +63,8 @@ function syncTime(firstTime, secondTime) {
   });
 }
 
-syncTime(timeIn, timeOut);
-syncTime(timeOut, timeIn);
-
-setDisableFieldset();
+function removeDisableAttribute() {
+  for (var i = 0; i < fieldSets.length; i++) {
+    fieldSets[i].removeAttribute('disabled', '');
+  }
+}
