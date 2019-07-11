@@ -120,9 +120,7 @@ mapPinMain.addEventListener('mousemove', function () {
 hotelType.addEventListener('change', function () {
   var selectedValue = hotelType.value;
   var selectedSettings = HOUSE_SETTINGS[selectedValue];
-  // placeholder: MIN_PRICE_FLAT,
-  // min: MIN_PRICE_FLAT
-  var attributes = Object.keys(selectedSettings); // ['placeholder', 'min']
+  var attributes = Object.keys(selectedSettings);
 
   for (var i = 0; i < attributes.length; i++) {
     var attribute = attributes[i];
@@ -202,7 +200,6 @@ function getPinXY() {
     x: mapPinMain.offsetLeft,
     y: mapPinMain.offsetTop
   };
-  // [mapPinMain.offsetLeft, mapPinMain.offsetTop];
 }
 
 function syncTime(firstTime, secondTime) {
