@@ -96,25 +96,25 @@
   }
 
   function renderHotels(objectsCount) {
-    var hotels = window.data.generateData(objectsCount);
-
-    for (var i = 0; i < objectsCount; i++) {
-      var element = templatePin.cloneNode(true);
-      element.setAttribute('alt', 'Объявление № ' + (i + 1));
-      element.setAttribute('style', 'left: ' + (hotels[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotels[i].location.y - PIN_HEIGHT) + 'px;');
-      element.children[0].setAttribute('src', hotels[i].author.avatar);
-      mapPinsBlock.appendChild(element);
-    }
-    return element;
+    // var hotels = window.data.generateData(objectsCount);
+    window.backend.load(function (hotels) {
+      for (var i = 0; i < objectsCount; i++) {
+        var element = templatePin.cloneNode(true);
+        element.setAttribute('alt', 'Объявление № ' + (i + 1));
+        element.setAttribute('style', 'left: ' + (hotels[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotels[i].location.y - PIN_HEIGHT) + 'px;');
+        element.children[0].setAttribute('src', hotels[i].author.avatar);
+        mapPinsBlock.appendChild(element);
+      }
+    });
   }
 
-  window.backend(function (hotels) {
-    var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < hotels.length; i++) {
-      fragment.appendChild(renderHotels(hotels[i]));
-    }
-    templatePin.appendChild(fragment);
-  });
+  // window.backend.load(function (hotels) {
+  //   var fragment = document.createDocumentFragment();
+  //
+  //   for (var i = 0; i < hotels.length; i++) {
+  //     fragment.appendChild(renderHotels(hotels[i]));
+  //   }
+  //   templatePin.appendChild(fragment);
+  // });
 
 })();
