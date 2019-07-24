@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.load = function (onSuccess, onError) {
+  window.load = function (onSuccess) {
 
     var URL = 'https://js.dump.academy/keksobooking/data';
     var xhr = new XMLHttpRequest();
@@ -15,3 +15,7 @@
     xhr.send();
   };
 })();
+
+// window.backend = {
+//   load: load
+//   };

@@ -108,7 +108,7 @@
     return element;
   }
 
-  window.load(function (hotels) {
+  window.backend(function (hotels) {
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < hotels.length; i++) {
