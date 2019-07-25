@@ -82,11 +82,6 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-  // mapPinMain.addEventListener('mousemove', function () {
-  //   var pinCoordinates = getPinXY();
-  //   address.value = pinCoordinates.x + MAIN_PIN_WIDTH / 2 + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
-  //   address.setAttribute('disabled', '');
-  // });
 
   function getPinXY() {
     return {
@@ -95,10 +90,10 @@
     };
   }
 
-  function renderHotels(objectsCount) {
+  function renderHotels() {
     // var hotels = window.data.generateData(objectsCount);
     window.backend.load(function (hotels) {
-      for (var i = 0; i < objectsCount; i++) {
+      for (var i = 0; i < hotels.length; i++) { // сделать forEach и не забыть в цикле [i] убрать. см 14ую минуту
         var element = templatePin.cloneNode(true);
         element.setAttribute('alt', 'Объявление № ' + (i + 1));
         element.setAttribute('style', 'left: ' + (hotels[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotels[i].location.y - PIN_HEIGHT) + 'px;');
@@ -107,14 +102,4 @@
       }
     });
   }
-
-  // window.backend.load(function (hotels) {
-  //   var fragment = document.createDocumentFragment();
-  //
-  //   for (var i = 0; i < hotels.length; i++) {
-  //     fragment.appendChild(renderHotels(hotels[i]));
-  //   }
-  //   templatePin.appendChild(fragment);
-  // });
-
 })();
