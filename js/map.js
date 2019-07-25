@@ -90,6 +90,12 @@
     };
   }
 
+  function showError() {
+    var templateError = document.querySelector('#error').content.querySelector('div');
+    var errorElement = templateError.cloneNode(true);
+    mapPinsBlock.appendChild(errorElement);
+  }
+
   function renderHotels() {
     // var hotels = window.data.generateData(objectsCount);
     window.backend.load(function (hotels) {
@@ -100,6 +106,6 @@
         element.children[0].setAttribute('src', hotels[i].author.avatar);
         mapPinsBlock.appendChild(element);
       }
-    });
+    }, showError);
   }
 })();
