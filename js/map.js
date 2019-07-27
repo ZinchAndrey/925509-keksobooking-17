@@ -58,6 +58,10 @@
       if (pinCoordinates.y > (Y_TO)) {
         mapPinMain.style.top = (Y_TO) + 'px';
       }
+
+      pinCoordinates = getPinXY();
+      address.value = pinCoordinates.x + MAIN_PIN_WIDTH / 2 + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
+      address.setAttribute('disabled', '');
     }
 
     function onMouseUp(upEvt) {
@@ -78,12 +82,6 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-  mapPinMain.addEventListener('mousemove', function () {
-    var pinCoordinates = getPinXY();
-    address.value = pinCoordinates.x + MAIN_PIN_WIDTH / 2 + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
-
-    address.setAttribute('disabled', '');
-  });
 
   function getPinXY() {
     return {
@@ -92,16 +90,23 @@
     };
   }
 
-  function renderHotels(objectsCount) {
-    var hotels = window.data.generateData(objectsCount);
+  function showError(message) {
+    var templateError = document.querySelector('#error').content.querySelector('div');
+    var errorElement = templateError.cloneNode(true);
+    mapPinsBlock.appendChild(errorElement);
+    console.log(message);
+  }
 
-    for (var i = 0; i < objectsCount; i++) {
-      var element = templatePin.cloneNode(true);
-      element.setAttribute('alt', 'Объявление № ' + (i + 1));
-      element.setAttribute('style', 'left: ' + (hotels[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotels[i].location.y - PIN_HEIGHT) + 'px;');
-      element.children[0].setAttribute('src', hotels[i].author.avatar);
-      mapPinsBlock.appendChild(element);
-    }
-    return element;
+  function renderHotels() {
+    // var hotels = window.data.generateData(objectsCount);
+    window.backend.load(function (hotels) {
+      for (var i = 0; i < hotels.length; i++) { // сделать forEach и не забыть в цикле [i] убрать. см 14ую минуту
+        var element = templatePin.cloneNode(true);
+        element.setAttribute('alt', 'Объявление № ' + (i + 1));
+        element.setAttribute('style', 'left: ' + (hotels[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotels[i].location.y - PIN_HEIGHT) + 'px;');
+        element.children[0].setAttribute('src', hotels[i].author.avatar);
+        mapPinsBlock.appendChild(element);
+      }
+    }, showError);
   }
 })();
