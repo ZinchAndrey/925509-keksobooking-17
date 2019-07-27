@@ -90,10 +90,11 @@
     };
   }
 
-  function showError() {
+  function showError(message) {
     var templateError = document.querySelector('#error').content.querySelector('div');
     var errorElement = templateError.cloneNode(true);
     mapPinsBlock.appendChild(errorElement);
+    console.log(message);
   }
 
   function renderHotels() {
