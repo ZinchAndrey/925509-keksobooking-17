@@ -119,10 +119,6 @@
       console.log(chosenHotels);
       console.log(housingType.value);
     });
-
-    // получить фильтры
-    // отфильтровать
-    // передать в переменную и ее подставить в функцию renderHotels
   }
 
   // var pin = document.querySelectorAll('.map__pin');
