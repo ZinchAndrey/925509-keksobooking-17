@@ -8,6 +8,7 @@
   var Y_TO = 630;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var MAX_PINS = 5;
 
   var mapPinsBlock = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -107,10 +108,14 @@
 
   function filterHotels(hotels) {
     housingType.addEventListener('change', function () {
-      var chosenHotels = hotels.filter(function (hotel) {
-        return hotel.offer.type === housingType.value;
-      });
-      renderHotels(chosenHotels);
+      if (housingType.value !== 'any') {
+        var chosenHotels = hotels.filter(function (hotel) {
+          return hotel.offer.type === housingType.value;
+        });
+      } else {
+        chosenHotels = hotels;
+      }
+      renderHotels(chosenHotels.slice(0, MAX_PINS));
       console.log(chosenHotels);
       console.log(housingType.value);
     });
@@ -120,9 +125,18 @@
     // передать в переменную и ее подставить в функцию renderHotels
   }
 
+  // var pin = document.querySelectorAll('.map__pin');
+
+  var removePins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
   function renderHotels(hotels) {
-    // mapPinsBlock.removeChild(templatePin);
-    // console.log(templatePin);
+    removePins();
+
     for (var i = 0; i < hotels.length; i++) { // сделать forEach и не забыть в цикле [i] убрать. см 14ую минуту
       var element = templatePin.cloneNode(true);
       element.setAttribute('alt', 'Объявление № ' + (i + 1));
