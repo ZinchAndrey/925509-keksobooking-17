@@ -106,24 +106,6 @@
 
   var hotelsArray = [];
 
-  function filterHotels(hotels) {
-    renderHotels(hotels.slice(0, MAX_PINS));
-    housingType.addEventListener('change', function () {
-      if (housingType.value !== 'any') {
-        var chosenHotels = hotels.filter(function (hotel) {
-          return hotel.offer.type === housingType.value;
-        });
-      } else {
-        chosenHotels = hotels;
-      }
-      renderHotels(chosenHotels.slice(0, MAX_PINS));
-      console.log(chosenHotels);
-      console.log(housingType.value);
-    });
-  }
-
-  // var pin = document.querySelectorAll('.map__pin');
-
   var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     pins.forEach(function (pin) {
@@ -143,11 +125,14 @@
     }
   }
 
-
   function loadHotels() {
     window.backend.load(function (hotels) {
-      filterHotels(hotels);
+      window.filter.filterHotels(hotels);
       console.log(hotelsArray);
     }, showError);
   }
+
+  window.map = {
+    renderHotels: renderHotels
+  };
 })();
