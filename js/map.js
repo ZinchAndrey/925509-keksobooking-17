@@ -107,6 +107,7 @@
   var hotelsArray = [];
 
   function filterHotels(hotels) {
+    renderHotels(hotels.slice(0, MAX_PINS));
     housingType.addEventListener('change', function () {
       if (housingType.value !== 'any') {
         var chosenHotels = hotels.filter(function (hotel) {
