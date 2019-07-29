@@ -6,6 +6,10 @@
 
   function filterHotels(hotels) {
     window.map.renderHotels(hotels.slice(0, MAX_PINS));
+
+    // временное решение - выводит описание первого элемента массива
+    window.card.getAds(hotels[0]);
+
     housingType.addEventListener('change', function () {
       if (housingType.value !== 'any') {
         var chosenHotels = hotels.filter(function (hotel) {
