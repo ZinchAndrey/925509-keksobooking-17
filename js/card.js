@@ -29,6 +29,12 @@
     photosElement.appendChild(getPhotos(offer.photos));
 
     sectionMap.insertBefore(mapCardElement, afterMapCard);
+
+    var popupClose = mapCardElement.querySelector('.popup__close');
+    popupClose.addEventListener('click', function () {
+      var mapCard = document.querySelector('.map__card');
+      mapCard.remove();
+    });
   };
 
   var translateHouseType = function (type) {
@@ -60,6 +66,7 @@
     });
     return fragment;
   };
+
 
   window.card = {
     getAds: getAds
