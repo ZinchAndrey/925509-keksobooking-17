@@ -104,7 +104,7 @@
     isMapActive = true;
   }
 
-  var hotelsArray = [];
+  // var hotelsArray = [];
 
   var removePins = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -128,7 +128,7 @@
   function loadHotels() {
     window.backend.load(function (hotels) {
       window.filter.filterHotels(hotels);
-      console.log(hotelsArray);
+      // console.log(hotelsArray);
     }, showError);
   }
 
