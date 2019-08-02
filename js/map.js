@@ -104,31 +104,31 @@
     isMapActive = true;
   }
 
-  var hotelsArray = [];
+  // var hotelsArray = [];
 
-  var removePins = function () {
+  function removePins() {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     pins.forEach(function (pin) {
       pin.remove();
     });
-  };
+  }
 
   function renderHotels(hotels) {
     removePins();
 
-    for (var i = 0; i < hotels.length; i++) { // сделать forEach и не забыть в цикле [i] убрать. см 14ую минуту
+    hotels.forEach(function (hotel, i) {
       var element = templatePin.cloneNode(true);
       element.setAttribute('alt', 'Объявление № ' + (i + 1));
-      element.setAttribute('style', 'left: ' + (hotels[i].location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotels[i].location.y - PIN_HEIGHT) + 'px;');
-      element.children[0].setAttribute('src', hotels[i].author.avatar);
+      element.setAttribute('style', 'left: ' + (hotel.location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotel.location.y - PIN_HEIGHT) + 'px;');
+      element.children[0].setAttribute('src', hotel.author.avatar);
       mapPinsBlock.appendChild(element);
-    }
+    });
   }
 
   function loadHotels() {
     window.backend.load(function (hotels) {
       window.filter.filterHotels(hotels);
-      console.log(hotelsArray);
+      // console.log(hotelsArray);
     }, showError);
   }
 
