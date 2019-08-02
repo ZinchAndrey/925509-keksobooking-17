@@ -11,12 +11,11 @@
     window.card.getAds(hotels[0]);
 
     housingType.addEventListener('change', function () {
+      var chosenHotels = hotels;
       if (housingType.value !== 'any') {
-        var chosenHotels = hotels.filter(function (hotel) {
+        chosenHotels = hotels.filter(function (hotel) {
           return hotel.offer.type === housingType.value;
         });
-      } else {
-        chosenHotels = hotels;
       }
       window.map.renderHotels(chosenHotels.slice(0, MAX_PINS));
       console.log(chosenHotels);

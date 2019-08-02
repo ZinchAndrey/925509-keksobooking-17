@@ -7,18 +7,22 @@
   var MIN_PRICE_PALACE = 10000;
   var HOUSE_SETTINGS = {
     'palace': {
+      label: 'Дворец',
       placeholder: MIN_PRICE_PALACE,
       min: MIN_PRICE_PALACE
     },
     'flat': {
+      label: 'Квартира',
       placeholder: MIN_PRICE_FLAT,
       min: MIN_PRICE_FLAT
     },
     'house': {
+      label: 'Дом',
       placeholder: MIN_PRICE_HOUSE,
       min: MIN_PRICE_HOUSE
     },
     'bungalo': {
+      label: 'Бунгало',
       placeholder: MIN_PRICE_BUNGALO,
       min: MIN_PRICE_BUNGALO
     }
@@ -67,6 +71,7 @@
   }
 
   window.form = {
-    removeDisableAttribute: removeDisableAttribute
+    removeDisableAttribute: removeDisableAttribute,
+    HOUSE_SETTINGS: HOUSE_SETTINGS
   };
 })();

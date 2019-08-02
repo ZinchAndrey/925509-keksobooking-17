@@ -15,18 +15,17 @@
     mapCardElement.querySelector('.popup__title').textContent = offer.title;
     mapCardElement.querySelector('.popup__text--address').textContent = offer.address;
     mapCardElement.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
-    mapCardElement.querySelector('.popup__type').textContent = translateHouseType(offer.type);
-    mapCardElement.querySelector('.popup__text--capacity').textContent = offer.rooms + 'комнаты для ' + offer.guests;
-    mapCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до' + offer.checkout;
+    mapCardElement.querySelector('.popup__type').textContent = window.form.HOUSE_SETTINGS[offer.type].label;
+    mapCardElement.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests;
+    mapCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ', выезд до ' + offer.checkout;
     // ниже скорее всего надо будет доработать как-то вывод удобств
     mapCardElement.querySelector('.popup__features').textContent = offer.features;
     mapCardElement.querySelector('.popup__description').textContent = offer.description;
-    mapCardElement.querySelector('.popup__photos').textContent = offer.photos;
     mapCardElement.querySelector('.popup__avatar').src = author.avatar;
 
     var photosElement = mapCardElement.querySelector('.popup__photos');
     photosElement.innerHTML = '';
-    photosElement.appendChild(getPhotos(offer.photos));
+    photosElement.appendChild(createPhotos(offer.photos));
 
     sectionMap.insertBefore(mapCardElement, afterMapCard);
 
@@ -52,7 +51,7 @@
     }
   };
 
-  var getPhotos = function (arr) {
+  var createPhotos = function (arr) {
     var fragment = document.createDocumentFragment();
 
     arr.forEach(function (element) {
