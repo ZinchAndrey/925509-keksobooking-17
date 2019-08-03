@@ -63,7 +63,7 @@
 
       pinCoordinates = getPinXY();
       address.value = Math.round(pinCoordinates.x + MAIN_PIN_WIDTH / 2) + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
-      address.setAttribute('disabled', '');
+      address.setAttribute('readonly', '');
     }
 
     function onMouseUp(upEvt) {
