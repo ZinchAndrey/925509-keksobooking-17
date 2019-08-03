@@ -119,9 +119,11 @@
     hotels.forEach(function (hotel, i) {
       var element = templatePin.cloneNode(true);
       element.setAttribute('alt', 'Объявление № ' + (i + 1));
+      element.setAttribute('data-id', i);
       element.setAttribute('style', 'left: ' + (hotel.location.x - PIN_WIDTH / 2) + 'px;' + 'top: ' + (hotel.location.y - PIN_HEIGHT) + 'px;');
       element.children[0].setAttribute('src', hotel.author.avatar);
       mapPinsBlock.appendChild(element);
+      window.map.addAdsClickHandler(element, hotels[i]);
     });
   }
 
@@ -132,7 +134,22 @@
     }, showError);
   }
 
+  function addAdsClickHandler(icon, promo) {
+    icon.addEventListener('click', function () {
+      closeCard();
+      window.card.getAds(promo);
+    });
+  }
+  function closeCard() {
+    var mapCard = document.querySelector('.map__card');
+
+    if (mapCard) {
+      mapCard.remove();
+    }
+  }
+
   window.map = {
-    renderHotels: renderHotels
+    renderHotels: renderHotels,
+    addAdsClickHandler: addAdsClickHandler
   };
 })();

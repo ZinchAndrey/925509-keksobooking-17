@@ -43,35 +43,7 @@
         }
       });
     }
-
-    // var popupClose = mapCardElement.querySelector('.popup__close');
-    // popupClose.addEventListener('click', function () {
-    //   var mapCard = document.querySelector('.map__card');
-    //   mapCard.remove();
-    // });
-    //
-    // document.addEventListener('keydown', function (evt) {
-    //   if (evt.keyCode === ESC_KEYCODE) {
-    //     var mapCard = document.querySelector('.map__card');
-    //     mapCard.remove();
-    //   }
-    // });
   }
-
-  // var translateHouseType = function (type) {
-  //   switch (type) {
-  //     case 'flat':
-  //       return 'Квартира';
-  //     case 'bungalo':
-  //       return 'Бунгало';
-  //     case 'house':
-  //       return 'Дом';
-  //     case 'palace':
-  //       return 'Дворец';
-  //     default:
-  //       return type;
-  //   }
-  // };
 
   function createPhotos(arr) {
     var fragment = document.createDocumentFragment();
@@ -87,7 +59,6 @@
     });
     return fragment;
   }
-
 
   window.card = {
     getAds: getAds
