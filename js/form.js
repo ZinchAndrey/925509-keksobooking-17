@@ -34,6 +34,10 @@
   var timeOut = document.querySelector('#timeout');
   var capacityInput = document.querySelector('#capacity');
   var roomNumberInput = document.querySelector('#room_number');
+  var templateSuccess = document.querySelector('#success').content.querySelector('.success');
+  var templateError = document.querySelector('#error').content.querySelector('.error');
+  var mainSection = document.querySelector('main');
+  var notice = document.querySelector('.notice');
 
 
   var fieldSets = document.querySelectorAll('fieldset');
@@ -104,6 +108,57 @@
       }
     }
   }
+
+  // функции успешной и неуспешной отправки формы
+
+  var onCloseEsc = function (evt, element) {
+    if (evt.keyCode === window.card.ESC_KEYCODE) {
+      mainSection.removeChild(element);
+      document.removeEventListener('keydown', onCloseEsc);
+    }
+  };
+
+  function showSuccessMessage() {
+    var successMessage = templateSuccess.cloneNode(true);
+
+    mainSection.insertBefore(successMessage, notice);
+
+    document.addEventListener('keydown', function (evt) {
+      var element = mainSection.querySelector('.success');
+      onCloseEsc(evt, element);
+    });
+  }
+
+  function showErrorMessage() {
+    var errorMessage = templateError.cloneNode(true);
+
+    mainSection.insertBefore(errorMessage, notice);
+
+    document.addEventListener('keydown', function (evt) {
+      var element = mainSection.querySelector('.error');
+      onCloseEsc(evt, element);
+    });
+  }
+
+  var form = document.querySelector('.ad-form');
+  form.addEventListener('submit', function (evt) {
+
+    validateRoom();
+
+    evt.preventDefault();
+
+    if (form.checkValidity()) {
+      window.backend.upload(new FormData(form), function () {
+        form.reset();
+
+        showSuccessMessage();
+      }, function () {
+        showErrorMessage();
+      });
+    } else {
+      form.reportValidity();
+    }
+  });
 
   window.form = {
     removeDisableAttribute: removeDisableAttribute,

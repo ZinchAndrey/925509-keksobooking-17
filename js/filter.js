@@ -7,9 +7,6 @@
   function filterHotels(hotels) {
     window.map.renderHotels(hotels.slice(0, MAX_PINS));
 
-    // временное решение - выводит описание первого элемента массива
-    window.card.getAds(hotels[0]);
-
     housingType.addEventListener('change', function () {
       var chosenHotels = hotels;
       if (housingType.value !== 'any') {
@@ -18,8 +15,6 @@
         });
       }
       window.map.renderHotels(chosenHotels.slice(0, MAX_PINS));
-      console.log(chosenHotels);
-      console.log(housingType.value);
 
       // ------------------- получение номера объявления
       // var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -32,7 +27,6 @@
       //   console.log('1');
       // });
       // --------------------
-
 
     });
   }

@@ -5,12 +5,12 @@
   var INVALID_STATUS = 400;
   var OK_STATUS = 200;
   var URL = 'https://js.dump.academy/keksobooking/data';
+  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
 
-  function load(onSuccess, onError) {
+  function xhrSend(onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-
     xhr.responseType = 'json';
-    xhr.open('GET', URL);
+    // xhr.open('GET', URL);
 
     xhr.addEventListener('load', function () {
       if (xhr.status === OK_STATUS) {
@@ -22,9 +22,28 @@
       }
     });
 
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+
+    return xhr;
+    // xhr.send();
+  }
+
+  function load(onLoad, onError) {
+    var xhr = xhrSend(onLoad, onError);
+    xhr.open('GET', URL);
     xhr.send();
   }
+
+  function upload(data, onLoad, onError) {
+    var xhr = xhrSend(onLoad, onError);
+    xhr.open('POST', URL_UPLOAD);
+    xhr.send(data);
+  }
+
   window.backend = {
-    load: load
+    load: load,
+    upload: upload
   };
 })();

@@ -8,7 +8,7 @@
   var Y_TO = 630;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var MAX_PINS = 5;
+  // var MAX_PINS = 5;
 
   var mapPinsBlock = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -62,7 +62,7 @@
       }
 
       pinCoordinates = getPinXY();
-      address.value = pinCoordinates.x + MAIN_PIN_WIDTH / 2 + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
+      address.value = Math.round(pinCoordinates.x + MAIN_PIN_WIDTH / 2) + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
       address.setAttribute('disabled', '');
     }
 
