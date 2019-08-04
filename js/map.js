@@ -191,6 +191,7 @@
     renderHotels: renderHotels,
     addAdsClickHandler: addAdsClickHandler,
     disabledMap: disabledMap,
-    address: address
+    address: address,
+    removePins: removePins
   };
 })();
