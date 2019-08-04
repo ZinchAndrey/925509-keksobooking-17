@@ -168,6 +168,7 @@
         showSuccessMessage();
       }, function () {
         showErrorMessage();
+        window.map.disabledMap();
       });
     } else {
       form.reportValidity();
