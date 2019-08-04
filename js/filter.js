@@ -15,10 +15,11 @@
         });
       }
       window.map.renderHotels(chosenHotels.slice(0, MAX_PINS));
+      console.log(chosenHotels);
     });
   }
 
-  // на этот блок будем вешать обработчик change для отрисовки пинов
+  // на этот блок буду вешать обработчик change для отрисовки пинов
   var filtersForm = document.querySelector('.map__filters');
 
   var filterPrice = document.querySelector('#housing-price');
@@ -63,7 +64,7 @@
   };
 
   // ф-я проверяет зн-е по количеству комнат
-  // для приведения типов (через строку) используем parseInt или знак +
+  // для приведения типов (через строку) использую parseInt
   var isPinRoomsFiltered = function (pin) {
     var filterRoomsValue = filterRooms.value;
     return (
@@ -73,7 +74,7 @@
   };
 
   // ф-я для проверки количества гостей
-  // для приведения типов (через строку) используем parseInt или знак +
+  // для приведения типов (через строку) использую parseInt
   var isPinGuestFiltered = function (pin) {
     var filterCapacityValue = filterCapacity.value;
     return (
@@ -94,7 +95,7 @@
     });
   };
 
-  // создаю callback функцию с функцией debounce(), в которой помещаю все действия связанные с отрисовкой пинов по выбору фильтрам
+  // создаю callback функцию с функцией debounce(), и в ней помещаю все действия связанные с отрисовкой пинов по фильтрам
   var filterChangeHandler = window.debounce(function () {
     var pins = filterPins(window.map.hotels);
     window.map.removePins();
