@@ -88,7 +88,9 @@
   // создаю callback функцию с функцией debounce(), и в ней помещаю все действия связанные с отрисовкой пинов по фильтрам
   var filterChangeHandler = window.debounce(function () {
     var mapCard = document.querySelector('.map__card');
-    mapCard.remove();
+    if (mapCard) {
+      mapCard.remove();
+    }
     var pins = filterPins(window.map.hotels);
     window.map.removePins();
     window.map.renderHotels(pins.slice(0, MAX_PINS));
