@@ -34,6 +34,10 @@
   var timeOut = document.querySelector('#timeout');
   var capacityInput = document.querySelector('#capacity');
   var roomNumberInput = document.querySelector('#room_number');
+  var templateSuccess = document.querySelector('#success').content.querySelector('.success');
+  var templateError = document.querySelector('#error').content.querySelector('.error');
+  var mainSection = document.querySelector('main');
+  var notice = document.querySelector('.notice');
 
 
   var fieldSets = document.querySelectorAll('fieldset');
@@ -104,6 +108,72 @@
       }
     }
   }
+
+  // функции успешной и неуспешной отправки формы
+
+  function onCloseEsc(evt, element) {
+    if (evt.keyCode === window.card.ESC_KEYCODE) {
+      mainSection.removeChild(element);
+      document.removeEventListener('keydown', onCloseEsc);
+    }
+  }
+
+  function onCloseClick(block) {
+    block.addEventListener('click', function () {
+      block.remove();
+    });
+  }
+
+  function showSuccessMessage() {
+    var successMessage = templateSuccess.cloneNode(true);
+
+    mainSection.insertBefore(successMessage, notice);
+
+    document.addEventListener('keydown', function (evt) {
+      var element = mainSection.querySelector('.success');
+      onCloseEsc(evt, element);
+    });
+
+    // - убирает окно по клику на произв область
+    var successBlock = document.querySelector('.success');
+    onCloseClick(successBlock);
+  }
+
+  function showErrorMessage() {
+    var errorMessage = templateError.cloneNode(true);
+
+    mainSection.insertBefore(errorMessage, notice);
+
+    document.addEventListener('keydown', function (evt) {
+      var element = mainSection.querySelector('.error');
+      onCloseEsc(evt, element);
+    });
+
+    // - убирает окно по клику на произв область
+    var errorBlock = document.querySelector('.error');
+    onCloseClick(errorBlock);
+  }
+
+  var form = document.querySelector('.ad-form');
+  form.addEventListener('submit', function (evt) {
+
+    validateRoom();
+
+    evt.preventDefault();
+
+    if (form.checkValidity()) {
+      window.backend.upload(new FormData(form), function () {
+        form.reset();
+        window.map.disabledMap();
+        showSuccessMessage();
+      }, function () {
+        showErrorMessage();
+        window.map.disabledMap();
+      });
+    } else {
+      form.reportValidity();
+    }
+  });
 
   window.form = {
     removeDisableAttribute: removeDisableAttribute,

@@ -3,12 +3,14 @@
 (function () {
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 85;
-  // var OBJECTS_COUNT = 8;
   var Y_FROM = 130;
   var Y_TO = 630;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var MAX_PINS = 5;
+  var PIN_MAIN_LEFT = 570;
+  var PIN_MAIN_TOP = 375;
+  var INACTIVEPIN_WIDTH = 156;
+  var INACTIVEPIN_HEIGHT = 156;
 
   var mapPinsBlock = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -16,7 +18,15 @@
   var mainForm = document.querySelector('.ad-form');
   var address = document.querySelector('#address');
   var templatePin = document.querySelector('#pin').content.querySelector('button');
-  var housingType = document.querySelector('#housing-type');
+  var mapFeatures = document.querySelector('.map__features');
+  var formHeader = document.querySelector('.ad-form-header');
+  var sectionMap = document.querySelector('.map');
+  var mapCard = document.querySelector('.map__card');
+  var xPin = mapPinMain.offsetLeft + (INACTIVEPIN_WIDTH / 2);
+  var yPin = mapPinMain.offsetTop + (INACTIVEPIN_HEIGHT / 2);
+
+  var mapFilter = document.querySelectorAll('.map__filter');
+  var formElement = document.querySelectorAll('.ad-form__element');
 
   var isMapActive = false;
 
@@ -62,8 +72,8 @@
       }
 
       pinCoordinates = getPinXY();
-      address.value = pinCoordinates.x + MAIN_PIN_WIDTH / 2 + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
-      address.setAttribute('disabled', '');
+      address.value = Math.round(pinCoordinates.x + MAIN_PIN_WIDTH / 2) + ', ' + (pinCoordinates.y + MAIN_PIN_HEIGHT);
+      address.setAttribute('readonly', '');
     }
 
     function onMouseUp(upEvt) {
@@ -72,7 +82,6 @@
       if (!isMapActive) {
         setMapActive();
         loadHotels();
-
       }
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -83,6 +92,27 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  // - неактивное состояние
+  function disabledMap() {
+    mapFilter.disabled = true;
+    mapFeatures.disabled = true;
+    formHeader.disabled = true;
+    isMapActive = false;
+
+    formElement.forEach(function (item) {
+      item.disabled = true;
+    });
+
+    mainForm.reset();
+    sectionMap.classList.add('map--faded');
+    mainForm.classList.add('ad-form--disabled');
+    removePins();
+
+    calculateAddress(xPin, yPin);
+    mapPinMain.style.top = PIN_MAIN_TOP + 'px';
+    mapPinMain.style.left = PIN_MAIN_LEFT + 'px';
+  }
+
   function getPinXY() {
     return {
       x: mapPinMain.offsetLeft,
@@ -90,11 +120,14 @@
     };
   }
 
-  function showError(message) {
+  function calculateAddress(x, y) {
+    window.map.address.value = Math.round(x) + ', ' + Math.round(y);
+  }
+
+  function showError() {
     var templateError = document.querySelector('#error').content.querySelector('div');
     var errorElement = templateError.cloneNode(true);
     mapPinsBlock.appendChild(errorElement);
-    console.log(message);
   }
 
   function setMapActive() {
@@ -102,9 +135,8 @@
     mainForm.classList.remove('ad-form--disabled');
     window.form.removeDisableAttribute();
     isMapActive = true;
+    address.value = Math.round(mapPinMain.offsetLeft + MAIN_PIN_WIDTH / 2) + ', ' + (mapPinMain.offsetTop + MAIN_PIN_HEIGHT);
   }
-
-  // var hotelsArray = [];
 
   function removePins() {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -129,8 +161,9 @@
 
   function loadHotels() {
     window.backend.load(function (hotels) {
-      window.filter.filterHotels(hotels);
-      // console.log(hotelsArray);
+      window.filter.startHotels(hotels);
+      window.filter.filterPins(hotels);
+      window.map.hotels = hotels;
     }, showError);
   }
 
@@ -140,8 +173,9 @@
       window.card.getAds(promo);
     });
   }
+
   function closeCard() {
-    var mapCard = document.querySelector('.map__card');
+
 
     if (mapCard) {
       mapCard.remove();
@@ -150,6 +184,10 @@
 
   window.map = {
     renderHotels: renderHotels,
-    addAdsClickHandler: addAdsClickHandler
+    addAdsClickHandler: addAdsClickHandler,
+    disabledMap: disabledMap,
+    address: address,
+    removePins: removePins,
+    mapCard: mapCard
   };
 })();
