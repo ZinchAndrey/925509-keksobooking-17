@@ -3,7 +3,6 @@
 (function () {
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 85;
-  // var OBJECTS_COUNT = 8;
   var Y_FROM = 130;
   var Y_TO = 630;
   var PIN_WIDTH = 50;
@@ -12,8 +11,6 @@
   var PIN_MAIN_TOP = 375;
   var INACTIVEPIN_WIDTH = 156;
   var INACTIVEPIN_HEIGHT = 156;
-  // var MAX_PINS = 5;
-
 
   var mapPinsBlock = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -29,8 +26,6 @@
 
   var mapFilter = document.querySelectorAll('.map__filter');
   var formElement = document.querySelectorAll('.ad-form__element');
-
-  // var housingType = document.querySelector('#housing-type');
 
   var isMapActive = false;
 
@@ -128,11 +123,10 @@
     window.map.address.value = Math.round(x) + ', ' + Math.round(y);
   }
 
-  function showError(message) {
+  function showError() {
     var templateError = document.querySelector('#error').content.querySelector('div');
     var errorElement = templateError.cloneNode(true);
     mapPinsBlock.appendChild(errorElement);
-    console.log(message);
   }
 
   function setMapActive() {
@@ -166,13 +160,10 @@
   function loadHotels() {
     window.backend.load(function (hotels) {
       window.filter.startHotels(hotels);
-      // window.filter.startingHotels(hotels);
       window.filter.filterPins(hotels);
       window.map.hotels = hotels;
-      // console.log(hotelsArray);
     }, showError);
   }
-
 
   function addAdsClickHandler(icon, promo) {
     icon.addEventListener('click', function () {
@@ -188,8 +179,6 @@
       mapCard.remove();
     }
   }
-
-  // disabledMap();
 
   window.map = {
     renderHotels: renderHotels,
