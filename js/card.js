@@ -78,6 +78,7 @@
   }
 
   window.card = {
+    ESC_KEYCODE: ESC_KEYCODE,
     getAds: getAds
   };
 })();
