@@ -82,7 +82,6 @@
       if (!isMapActive) {
         setMapActive();
         loadHotels();
-
       }
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -136,6 +135,7 @@
     mainForm.classList.remove('ad-form--disabled');
     window.form.removeDisableAttribute();
     isMapActive = true;
+    address.value = Math.round(mapPinMain.offsetLeft + MAIN_PIN_WIDTH / 2) + ', ' + (mapPinMain.offsetTop + MAIN_PIN_HEIGHT);
   }
 
   function removePins() {
