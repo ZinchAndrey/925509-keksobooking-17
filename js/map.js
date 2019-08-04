@@ -165,10 +165,14 @@
 
   function loadHotels() {
     window.backend.load(function (hotels) {
-      window.filter.filterHotels(hotels);
+      window.filter.startHotels(hotels);
+      // window.filter.startingHotels(hotels);
+      window.filter.filterPins(hotels);
+      window.map.hotels = hotels;
       // console.log(hotelsArray);
     }, showError);
   }
+
 
   function addAdsClickHandler(icon, promo) {
     icon.addEventListener('click', function () {

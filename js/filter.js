@@ -4,19 +4,19 @@
   var MAX_PINS = 5;
   var housingType = document.querySelector('#housing-type');
 
-  function filterHotels(hotels) {
+  function startHotels(hotels) {
     window.map.renderHotels(hotels.slice(0, MAX_PINS));
 
-    housingType.addEventListener('change', function () {
-      var chosenHotels = hotels;
-      if (housingType.value !== 'any') {
-        chosenHotels = hotels.filter(function (hotel) {
-          return hotel.offer.type === housingType.value;
-        });
-      }
-      window.map.renderHotels(chosenHotels.slice(0, MAX_PINS));
-      console.log(chosenHotels);
-    });
+    // housingType.addEventListener('change', function () {
+    //   var chosenHotels = hotels;
+    //   if (housingType.value !== 'any') {
+    //     chosenHotels = hotels.filter(function (hotel) {
+    //       return hotel.offer.type === housingType.value;
+    //     });
+    //   }
+    //   window.map.renderHotels(chosenHotels.slice(0, MAX_PINS));
+    //   console.log(chosenHotels);
+    // });
   }
 
   // на этот блок буду вешать обработчик change для отрисовки пинов
@@ -99,14 +99,18 @@
   var filterChangeHandler = window.debounce(function () {
     var pins = filterPins(window.map.hotels);
     window.map.removePins();
-    window.map.renderHotels(pins);
+    // window.map.renderHotels(hotels.slice(0, MAX_PINS));
+    window.map.renderHotels(pins.slice(0, MAX_PINS));
   });
 
+  // getStartedPins();
+
   // Вызываю полученную callback функцию (с функцией устранение дребезга ('debounce()')) на событии формы с фильтрами
+  // filterChangeHandler();
   filtersForm.addEventListener('change', filterChangeHandler);
 
   window.filter = {
-    filterHotels: filterHotels,
-    // filterPins: filterPins // удалить
+    startHotels: startHotels,
+    filterPins: filterPins // удалить
   };
 })();
