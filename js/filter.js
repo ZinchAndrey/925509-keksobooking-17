@@ -15,19 +15,6 @@
         });
       }
       window.map.renderHotels(chosenHotels.slice(0, MAX_PINS));
-
-      // ------------------- получение номера объявления
-      // var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      // mapPins.forEach(function (item) {
-      //   console.log(item.getAttribute('data-id'));
-      // });
-      // // ---------------------- вывожу сообщение при клике на первый пин
-      // var mapPin = document.querySelector('.map__pin:not(.map__pin--main)');
-      // mapPin.addEventListener('click', function () {
-      //   console.log('1');
-      // });
-      // --------------------
-
     });
   }
 

@@ -111,12 +111,18 @@
 
   // функции успешной и неуспешной отправки формы
 
-  var onCloseEsc = function (evt, element) {
+  function onCloseEsc(evt, element) {
     if (evt.keyCode === window.card.ESC_KEYCODE) {
       mainSection.removeChild(element);
       document.removeEventListener('keydown', onCloseEsc);
     }
-  };
+  }
+
+  function onCloseClick(block) {
+    block.addEventListener('click', function () {
+      block.remove();
+    });
+  }
 
   function showSuccessMessage() {
     var successMessage = templateSuccess.cloneNode(true);
@@ -127,6 +133,10 @@
       var element = mainSection.querySelector('.success');
       onCloseEsc(evt, element);
     });
+
+    // - убирает окно по клику на произв область
+    var successBlock = document.querySelector('.success');
+    onCloseClick(successBlock);
   }
 
   function showErrorMessage() {
@@ -138,6 +148,10 @@
       var element = mainSection.querySelector('.error');
       onCloseEsc(evt, element);
     });
+
+    // - убирает окно по клику на произв область
+    var errorBlock = document.querySelector('.error');
+    onCloseClick(errorBlock);
   }
 
   var form = document.querySelector('.ad-form');
@@ -150,7 +164,7 @@
     if (form.checkValidity()) {
       window.backend.upload(new FormData(form), function () {
         form.reset();
-
+        window.map.disabledMap();
         showSuccessMessage();
       }, function () {
         showErrorMessage();

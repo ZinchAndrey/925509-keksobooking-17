@@ -8,7 +8,12 @@
   var Y_TO = 630;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var PIN_MAIN_LEFT = 570;
+  var PIN_MAIN_TOP = 375;
+  var INACTIVEPIN_WIDTH = 156;
+  var INACTIVEPIN_HEIGHT = 156;
   // var MAX_PINS = 5;
+
 
   var mapPinsBlock = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -16,7 +21,16 @@
   var mainForm = document.querySelector('.ad-form');
   var address = document.querySelector('#address');
   var templatePin = document.querySelector('#pin').content.querySelector('button');
-  var housingType = document.querySelector('#housing-type');
+  var mapFeatures = document.querySelector('.map__features');
+  var formHeader = document.querySelector('.ad-form-header');
+  var sectionMap = document.querySelector('.map');
+  var xPin = mapPinMain.offsetLeft + (INACTIVEPIN_WIDTH / 2);
+  var yPin = mapPinMain.offsetTop + (INACTIVEPIN_HEIGHT / 2);
+
+  var mapFilter = document.querySelectorAll('.map__filter');
+  var formElement = document.querySelectorAll('.ad-form__element');
+
+  // var housingType = document.querySelector('#housing-type');
 
   var isMapActive = false;
 
@@ -83,11 +97,35 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  // - неактивное состояние
+  function disabledMap() {
+    mapFilter.disabled = true;
+    mapFeatures.disabled = true;
+    formHeader.disabled = true;
+
+    formElement.forEach(function (item) {
+      item.disabled = true;
+    });
+
+    mainForm.reset();
+    sectionMap.classList.add('map--faded');
+    mainForm.classList.add('ad-form--disabled');
+    removePins();
+
+    calculateAddress(xPin, yPin);
+    mapPinMain.style.top = PIN_MAIN_TOP + 'px';
+    mapPinMain.style.left = PIN_MAIN_LEFT + 'px';
+  }
+
   function getPinXY() {
     return {
       x: mapPinMain.offsetLeft,
       y: mapPinMain.offsetTop
     };
+  }
+
+  function calculateAddress(x, y) {
+    window.map.address.value = Math.round(x) + ', ' + Math.round(y);
   }
 
   function showError(message) {
@@ -103,8 +141,6 @@
     window.form.removeDisableAttribute();
     isMapActive = true;
   }
-
-  // var hotelsArray = [];
 
   function removePins() {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -140,6 +176,7 @@
       window.card.getAds(promo);
     });
   }
+
   function closeCard() {
     var mapCard = document.querySelector('.map__card');
 
@@ -148,8 +185,12 @@
     }
   }
 
+  // disabledMap();
+
   window.map = {
     renderHotels: renderHotels,
-    addAdsClickHandler: addAdsClickHandler
+    addAdsClickHandler: addAdsClickHandler,
+    disabledMap: disabledMap,
+    address: address
   };
 })();
