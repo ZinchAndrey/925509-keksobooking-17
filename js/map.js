@@ -19,7 +19,6 @@
   var mapFeatures = document.querySelector('.map__features');
   var formHeader = document.querySelector('.ad-form-header');
   var sectionMap = document.querySelector('.map');
-  var mapCard = document.querySelector('.map__card');
   var adFormReset = document.querySelector('.ad-form__reset');
   var xPin = mapPinMain.offsetLeft + (MAIN_PIN_WIDTH / 2);
   var yPin = mapPinMain.offsetTop + (MAIN_PIN_HEIGHT);
@@ -112,6 +111,8 @@
     mapPinMain.style.top = PIN_MAIN_TOP + 'px';
     mapPinMain.style.left = PIN_MAIN_LEFT + 'px';
     calculateAddress(xPin, yPin);
+
+    closeCard();
   }
 
   function getPinXY() {
@@ -175,11 +176,12 @@
     });
   }
 
-  function closeCard() {
+  var closeCard = function () {
+    var mapCard = document.querySelector('.map__card.popup');
     if (mapCard) {
       mapCard.remove();
     }
-  }
+  };
 
   window.map = {
     renderHotels: renderHotels,
@@ -187,6 +189,6 @@
     disabledMap: disabledMap,
     address: address,
     removePins: removePins,
-    mapCard: mapCard
+    adFormReset: adFormReset
   };
 })();
