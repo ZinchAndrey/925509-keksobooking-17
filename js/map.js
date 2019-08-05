@@ -187,6 +187,7 @@
     disabledMap: disabledMap,
     address: address,
     removePins: removePins,
-    mapCard: mapCard
+    mapCard: mapCard,
+    adFormReset: adFormReset
   };
 })();

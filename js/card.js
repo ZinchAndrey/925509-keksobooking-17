@@ -48,6 +48,10 @@
           mapCard.remove();
         }
       });
+
+      window.map.adFormReset.addEventListener('click', function () {
+        mapCard.remove();
+      });
     }
   }
 
