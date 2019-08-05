@@ -9,8 +9,6 @@
   var PIN_HEIGHT = 70;
   var PIN_MAIN_LEFT = 570;
   var PIN_MAIN_TOP = 375;
-  var INACTIVEPIN_WIDTH = 156;
-  var INACTIVEPIN_HEIGHT = 156;
 
   var mapPinsBlock = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -22,13 +20,16 @@
   var formHeader = document.querySelector('.ad-form-header');
   var sectionMap = document.querySelector('.map');
   var mapCard = document.querySelector('.map__card');
-  var xPin = mapPinMain.offsetLeft + (INACTIVEPIN_WIDTH / 2);
-  var yPin = mapPinMain.offsetTop + (INACTIVEPIN_HEIGHT / 2);
+  var adFormReset = document.querySelector('.ad-form__reset');
+  var xPin = mapPinMain.offsetLeft + (MAIN_PIN_WIDTH / 2);
+  var yPin = mapPinMain.offsetTop + (MAIN_PIN_HEIGHT);
 
   var mapFilter = document.querySelectorAll('.map__filter');
   var formElement = document.querySelectorAll('.ad-form__element');
 
   var isMapActive = false;
+
+  adFormReset.addEventListener('click', disabledMap);
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -108,9 +109,9 @@
     mainForm.classList.add('ad-form--disabled');
     removePins();
 
-    calculateAddress(xPin, yPin);
     mapPinMain.style.top = PIN_MAIN_TOP + 'px';
     mapPinMain.style.left = PIN_MAIN_LEFT + 'px';
+    calculateAddress(xPin, yPin);
   }
 
   function getPinXY() {
@@ -175,8 +176,6 @@
   }
 
   function closeCard() {
-
-
     if (mapCard) {
       mapCard.remove();
     }

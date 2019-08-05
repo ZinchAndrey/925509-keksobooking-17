@@ -2,6 +2,9 @@
 
 (function () {
   var MAX_PINS = 5;
+  var MIN_PRICE = 10000;
+  var MAX_PRICE = 50000;
+
   var housingType = document.querySelector('#housing-type');
 
   // на этот блок буду вешать обработчик change для отрисовки пинов
@@ -13,9 +16,6 @@
   var filterFeatures = document.querySelector('#housing-features');
   var inputFeatures = filterFeatures.querySelectorAll('input');
 
-  // Определяем диапазон цен
-  var MIN_PRICE = 10000;
-  var MAX_PRICE = 50000;
 
   // ф-я, которая отображает изначальные отели
   function startHotels(hotels) {

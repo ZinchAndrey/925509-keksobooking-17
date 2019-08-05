@@ -112,7 +112,7 @@
   // функции успешной и неуспешной отправки формы
 
   function onCloseEsc(evt, element) {
-    if (evt.keyCode === window.card.ESC_KEYCODE) {
+    if (evt.keyCode === window.card.ESC_KEYCODE && element) {
       mainSection.removeChild(element);
       document.removeEventListener('keydown', onCloseEsc);
     }
